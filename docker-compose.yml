@@ -1,0 +1,82 @@
+version: "3.7"
+services:
+  #app service
+  app:
+    build:
+      context: ./
+      dockerfile: ./docker_config/php/app.dockerfile
+    restart: unless-stopped
+    working_dir: /var/www/html
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./source:/var/www/html:cached
+    networks:
+      - app-network
+    depends_on:
+      - database
+      - mailhog
+      - redis
+  #database service
+  database:
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "33306:3306"
+    volumes:
+      - database-app:/var/lib/mysql
+      - ./docker_config/mysql/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
+    env_file:
+      - ./docker_config/env/.env_mysql
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    networks:
+      - app-network
+  # nginx service
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./source:/var/www/html:cached
+      - ./docker_config/nginx/:/etc/nginx/conf.d/
+      - ./docker_config/nginx/logs/:/var/log/nginx/
+    ports:
+      - "80:80"
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    networks:
+      - app-network
+    depends_on:
+      - app
+  # mailhog service
+  # mailhog:
+  #   image: mailhog/mailhog
+  #   ports: 
+  #     - 1025:1025 # smtp server
+  #     - 8025:8025 # web ui
+  #   networks:
+  #     - app-network
+  # redis:
+  #   image: redis:6.2.6-alpine
+  #   restart: unless-stopped
+  #   volumes:
+  #   - redisapp:/data
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - app-network
+  # swagger-editor:
+  #   image: swaggerapi/swagger-editor
+  #   container_name: "swagger-editor"
+  #   ports:
+  #     - "8088:8080"
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  database-app:
+    driver: local
+  redisapp:
+    driver: local
