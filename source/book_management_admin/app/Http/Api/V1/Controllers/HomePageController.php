@@ -10,17 +10,4 @@ class HomePageController extends BaseController
     {
         $this->homePageService = $homePageService;
     }
-
-    public function checkData()
-    {
-        return $this->apiResponse(
-            [
-                'a' => 'aaa',
-                'b' => 'bbb',
-                'c' => 'ccc',
-            ],
-            'abc',
-            422
-        );
-    }
 }

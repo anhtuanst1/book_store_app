@@ -6,4 +6,7 @@ return [
         'ERROR_00002' => 'Certification failed. The verification code has expired.',
         'ERROR_00003' => 'Authentication failed. Authentication code is not correct.',
     ],
+    'book' => [
+        'ERROR_00001' => 'The book not found.'
+    ],
 ];
