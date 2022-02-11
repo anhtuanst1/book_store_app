@@ -9,4 +9,10 @@ return [
     'book' => [
         'ERROR_00001' => 'The book not found.'
     ],
+    'login' => [
+        'ERROR_00001' => 'Login failed. The information entered in the form below is incorrect.',
+        'ERROR_00002' => 'Account usage has been suspended because the number of login failures has exceeded the limit.',
+        'ERROR_00003' => 'Login failed. The email address or password is incorrect.',
+        'ERROR_00004' => 'User information not found.'
+    ],
 ];

@@ -16,6 +16,7 @@ use App\Http\Api\V1\Controllers\BookManagementController;
 
 // public routes
 Route::post('/login', [AuthController::class, 'doLogin']);
+Route::post('/refresh-token', [AuthController::class, 'refreshToken']);
 Route::group(['prefix' => 'book'], function () {
     Route::post('/list', [BookManagementController::class, 'getListBooks']);
     Route::post('/detail/{bookId}', [BookManagementController::class, 'getBookDetail']);
