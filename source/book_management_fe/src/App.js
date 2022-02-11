@@ -20,7 +20,7 @@ function App() {
               height="30"
               className="d-inline-block align-top me-3"
             />{' '}
-            Book Store App
+            Book Store
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">

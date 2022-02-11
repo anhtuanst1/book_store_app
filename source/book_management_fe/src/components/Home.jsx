@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAPICall } from './Support/axiosMethodCalls';
+import { MyPagination } from "./Support/MyPagination";
 import { getListBooks } from './Configuration/config_url';
 
 import {
@@ -10,21 +11,27 @@ import {
 } from 'react-bootstrap';
 
 function Home () {
-    const [listBooks, setListBooks] = useState({data: [], current_page: 1, per_page: 0, total: 0})
+    const [listBooks, setListBooks] = useState({data: [], current_page: 1, last_page: 1, per_page: 0, total: 0})
     const navigate = useNavigate()
 
     useEffect(() => {
-        getAPICall(getListBooks).then(result => {
+        afterPageClicked(listBooks.current_page)
+    }, [])
+
+    function afterPageClicked(page_number) {
+        setListBooks({...listBooks, current_page: page_number})
+        getAPICall(`${getListBooks}?page=${page_number}`).then(result => {
             let dataResponse = result.data.response.list_books
             setListBooks({
                 ...listBooks,
                 data: dataResponse.data,
                 current_page: dataResponse.current_page,
+                last_page: dataResponse.last_page,
                 per_page: dataResponse.per_page,
                 total: dataResponse.total
             })
         })
-    }, [])
+    }
 
     function redirectToDetail(bookId) {
         navigate(`book/${bookId}`)
@@ -39,12 +46,12 @@ function Home () {
                         (listBooks.data.length != 0) ?
                         listBooks.data.map(book => {
                             return (
-                                <Col key={book.id}>
-                                    <Card style={{ width: '18rem' }}>
+                                <Col key={book.id} sm={6} md={4} xl={3} className='py-2'>
+                                    <Card className='w-100'>
                                         <Card.Img variant="top" src="/images/book_default.png" />
-                                        <Card.Body>
+                                        <Card.Body className='text-start'>
                                             <Card.Title>{book.name}</Card.Title>
-                                            <Card.Text className='three-dot-2'>
+                                            <Card.Text className='w-100 three-dot-1'>
                                                 {book.description}
                                             </Card.Text>
                                             <Button variant="primary" onClick={() => redirectToDetail(book.id)}>Read</Button>
@@ -54,6 +61,13 @@ function Home () {
                             )
                         }) : <h3>No data</h3>
                     }
+                </Row>
+                <Row>
+                    <MyPagination
+                        totPages={listBooks.last_page}
+                        currentPage={listBooks.current_page}
+                        pageClicked={(ele) => { afterPageClicked(ele) }}>
+                    </MyPagination>
                 </Row>
             </Container>
         </Fragment>
