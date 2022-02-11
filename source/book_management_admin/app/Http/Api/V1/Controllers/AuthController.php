@@ -80,4 +80,14 @@ class AuthController extends BaseController
             $statusCode
         );
     }
+
+    /**
+     * @return array
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        return $this->apiResponse(null, '', 204);
+    }
 }
