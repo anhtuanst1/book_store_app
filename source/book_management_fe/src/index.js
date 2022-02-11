@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 
 import Home from './components/Home';
+import Login from './components/Login';
 import Admin from './components/Admin';
 import Dashboard from './components/Admin/DashBoard';
 import BookManagements from './components/Admin/BookManagements';
@@ -31,6 +32,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
             <Route path="book/:bookId" element={<BookDetail />} />
           </Route>
           <Route path="admin" element={<Admin />}>

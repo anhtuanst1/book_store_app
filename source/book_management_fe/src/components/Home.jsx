@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAPICall } from '../Datalayer/axiosMethodCalls';
-import { getListBooks } from '../Configuration/config_url';
+import { getAPICall } from './Support/axiosMethodCalls';
+import { getListBooks } from './Configuration/config_url';
 
 import {
     Container, Row, Col,

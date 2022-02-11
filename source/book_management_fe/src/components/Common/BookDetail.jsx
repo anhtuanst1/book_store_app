@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAPICall } from '../Datalayer/axiosMethodCalls';
+import { getAPICall } from '../Support/axiosMethodCalls';
 import { getBookDetail } from '../Configuration/config_url';
 
 import {
