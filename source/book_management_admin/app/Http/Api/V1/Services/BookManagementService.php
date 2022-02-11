@@ -46,6 +46,9 @@ class BookManagementService
             );
         }
 
+        $bookInfo = $bookInfo->toArray();
+        $bookInfo['created_at'] = convertTimeZone($bookInfo['created_at']);
+
         return $this->handleApiResult(
             200,
             __('message_info.book.INFO_00002'),
