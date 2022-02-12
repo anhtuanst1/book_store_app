@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 function BookManagements () {
     return (
         <Fragment>
-            Book Managements
+            <h3 className='show-check-layout-1'>Book Managements</h3>
             <Outlet />
         </Fragment>
     )

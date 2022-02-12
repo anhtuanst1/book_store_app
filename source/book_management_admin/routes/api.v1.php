@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Api\V1\Controllers\AuthController;
+use App\Http\Api\V1\Controllers\DashboardController;
 use App\Http\Api\V1\Controllers\BookManagementController;
 
 /*
@@ -26,10 +27,12 @@ Route::group(['prefix' => 'book'], function () {
 Route::middleware('auth.jwt')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/get-user', [AuthController::class, 'getUserInfo']);
+    Route::post('/dashboard', [DashboardController::class, 'getDashboardInfo']);
 
     Route::group(['prefix' => 'book'], function () {
-        // Route::post('/create', [BookManagementController::class, 'createBook']);
-        // Route::post('/edit/{bookId}', [BookManagementController::class, 'editBook']);
-        // Route::post('/delete/{bookId}', [BookManagementController::class, 'deleteBook']);
+        Route::post('/create', [BookManagementController::class, 'createBook']);
+        Route::post('/update/{bookId}', [BookManagementController::class, 'updateBook']);
+        Route::post('/delete/{bookId}', [BookManagementController::class, 'deleteBook']);
+        Route::post('/restore/{bookId}', [BookManagementController::class, 'restoreBook']);
     });
 });

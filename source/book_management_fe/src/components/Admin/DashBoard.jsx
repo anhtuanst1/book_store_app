@@ -2,7 +2,9 @@ import { Fragment } from 'react';
 
 function DashBoard () {
     return (
-        <Fragment>Dashboard</Fragment>
+        <Fragment>
+            <h3 className='show-check-layout'>Dashboard</h3>
+        </Fragment>
     )
 }
 

@@ -6,7 +6,7 @@ use App\Models\Books;
 class BookManagementRepository
 {
     /**
-     * @return App\Models\Books
+     * @return Books
      */
     public function getListBooks()
     {
@@ -25,12 +25,13 @@ class BookManagementRepository
 
     /**
      * @param string $bookId
+     * @param boolean $isTrash
      * 
-     * @return App\Models\Books
+     * @return Books
      */
-    public function getBookDetail($bookId)
+    public function getBookDetail($bookId, $isTrash = false)
     {
-        return Books::select([
+        $bookInfo = Books::select([
             'id',
             'name',
             'price',
@@ -39,6 +40,50 @@ class BookManagementRepository
             'content',
             'views',
             'created_at'
-        ])->where('id', $bookId)->first();
+        ])->where('id', $bookId);
+        if($isTrash) {
+            $bookInfo = $bookInfo->withTrashed();
+        }
+        $bookInfo = $bookInfo->first();
+
+        return $bookInfo;
+    }
+
+    /**
+     * @param array $dataInput
+     *
+     * @return Books
+     */
+    public function createBook(array $dataInput)
+    {
+        return Books::create($dataInput);
+    }
+
+    /**
+     * @param mixed $bookId
+     *
+     * @return Books
+     */
+    public function deleteBook($bookId)
+    {
+        Books::withTrashed()->where('id', $bookId)->update([
+            'deleted_by' => auth()->user()->name ?? ''
+        ]);
+
+        return Books::where('id', $bookId)->delete();
+    }
+
+    /**
+     * @param mixed $bookId
+     *
+     * @return Books
+     */
+    public function restoreBook($bookId)
+    {
+        Books::withTrashed()->where('id', $bookId)->update([
+            'deleted_by' => null
+        ]);
+
+        return Books::where('id', $bookId)->restore();
     }
 }

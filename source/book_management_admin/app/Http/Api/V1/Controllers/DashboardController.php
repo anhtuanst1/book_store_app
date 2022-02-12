@@ -10,4 +10,19 @@ class DashboardController extends BaseController
     {
         $this->dashboardService = $dashboardService;
     }
+
+    /**
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function getDashboardInfo()
+    {
+        $result = $this->dashboardService->getListBooksByView();
+
+        return $this->apiResponse(
+            $result['response'],
+            $result['message'],
+            $result['code'],
+            $result['status'],
+        );
+    }
 }

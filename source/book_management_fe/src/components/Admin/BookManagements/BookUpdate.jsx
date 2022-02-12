@@ -2,7 +2,9 @@ import { Fragment } from 'react';
 
 function BookUpdate () {
     return (
-        <Fragment>Book Update</Fragment>
+        <Fragment>
+            <h3 className='show-check-layout-1'>Book Update</h3>
+        </Fragment>
     )
 }
 

@@ -2,7 +2,9 @@ import { Fragment } from 'react';
 
 function BookCreate () {
     return (
-        <Fragment>Book Create</Fragment>
+        <Fragment>
+            <h3 className='show-check-layout-1'>Book Create</h3>
+        </Fragment>
     )
 }
 
