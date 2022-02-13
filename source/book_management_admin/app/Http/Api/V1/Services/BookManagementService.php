@@ -126,6 +126,42 @@ class BookManagementService
     }
 
     /**
+     * @param integer $bookId
+     *
+     * @return array
+     */
+    public function updateViewsBook($bookId)
+    {
+        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, true);
+
+        try {
+            if(empty($bookInfo)) {
+                return $this->handleApiResult(
+                    404,
+                    __('message_error.book.ERROR_00001')
+                );
+            }
+
+            $dataUpdate['views'] = $bookInfo->views + 1;
+            $result = tap($bookInfo)->update($dataUpdate)->toArray();
+
+            return $this->handleApiResult(
+                200,
+                __('message_info.book.INFO_00004'),
+                null,
+                $result
+            );
+        } catch (Exception $e) {
+            saveLogCatch($e);
+
+            return $this->handleApiResult(
+                400,
+                __('message_error.book.ERROR_00003')
+            );
+        }
+    }
+
+    /**
      * @param int $bookId
      *
      * @return array

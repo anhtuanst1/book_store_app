@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Outlet } from 'react-router-dom';
+import { getLogoHeaderUrl } from './components/Support/getImageUrl';
 import './App.css';
 
 import {
@@ -15,7 +16,7 @@ function App() {
           <Navbar.Brand href="/">
             <img
               alt=""
-              src="images/logo.svg"
+              src={getLogoHeaderUrl()}
               width="30"
               height="30"
               className="d-inline-block align-top me-3"

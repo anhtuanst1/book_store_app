@@ -19,7 +19,7 @@ class BookManagementRepository
             'content',
             'views',
             'created_at'
-        ])->orderBy('views', 'desc')
+        ])->orderBy('created_at', 'desc')
         ->paginate(config('common.pagination_get_limit'));
     }
 

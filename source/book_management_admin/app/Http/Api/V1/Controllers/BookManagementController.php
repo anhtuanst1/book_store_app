@@ -106,6 +106,32 @@ class BookManagementController extends BaseController
      *
      * @return \Illuminate\Support\Facades\Response
      */
+    public function updateViewsBook($bookId)
+    {
+        $result = $this->bookManagementService->updateViewsBook($bookId);
+
+        if (isset($result['response'])) {
+            return $this->apiResponse(
+                $result['response'],
+                $result['message'],
+                $result['code'],
+                $result['status'],
+            );
+        }
+
+        return $this->apiResponse(
+            null,
+            $result['message'],
+            $result['code'],
+            $result['status'],
+        );
+    }
+
+    /**
+     * @param int $bookId
+     *
+     * @return \Illuminate\Support\Facades\Response
+     */
     public function deleteBook($bookId)
     {
         $result = $this->bookManagementService->deleteBook($bookId);

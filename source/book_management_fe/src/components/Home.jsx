@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAPICall } from './Support/axiosMethodCalls';
+import { getAPICall, postAPICall } from './Support/axiosMethodCalls';
 import { MyPagination } from "./Support/MyPagination";
-import { getListBooks } from './Configuration/config_url';
+import { getListBooks, updateViewsBook } from './Configuration/config_url';
 
 import {
     Container, Row, Col,
@@ -34,6 +34,11 @@ function Home () {
     }
 
     function redirectToDetail(bookId) {
+        postAPICall(updateViewsBook.replace('__bookId', bookId)).then(result => {
+            let dataResponse = result.data.response
+            console.log(dataResponse)
+        })
+
         navigate(`book/${bookId}`)
     }
 
@@ -64,7 +69,7 @@ function Home () {
                 </Row>
                 <Row>
                     <MyPagination
-                        totPages={listBooks.last_page}
+                        totPages={parseInt(listBooks.last_page)}
                         currentPage={listBooks.current_page}
                         pageClicked={(ele) => { afterPageClicked(ele) }}>
                     </MyPagination>

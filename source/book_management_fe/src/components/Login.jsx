@@ -16,13 +16,15 @@ function Login () {
     const navigate = useNavigate()
 
     useEffect(() => {
-        
+        //
     }, [])
 
     function submitLogin() {
         postAPICall(doLogin, loginInfo).then(result => {
             clearError()
-            console.log('login success ', result)
+            let dataResponse = result.data.response
+            localStorage.setItem("data_login", JSON.stringify(dataResponse))
+            navigate('/admin')
         }).catch(error => {
             clearError()
             let resultError = error.response.data

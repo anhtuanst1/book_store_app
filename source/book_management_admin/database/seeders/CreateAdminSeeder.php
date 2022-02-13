@@ -16,11 +16,21 @@ class CreateAdminSeeder extends Seeder
     {
         User::truncate();
 
-        User::insert([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('admin'),
-            'created_at' => now()
-        ]);
+        $listUsers = [
+            [
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => bcrypt('admin'),
+                'created_at' => now()
+            ],
+            [
+                'name' => 'staff',
+                'email' => 'staff@gmail.com',
+                'password' => bcrypt('staff'),
+                'created_at' => now()
+            ]
+        ];
+
+        User::insert($listUsers);
     }
 }

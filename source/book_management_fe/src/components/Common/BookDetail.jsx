@@ -29,7 +29,11 @@ function BookDetail () {
             <Container>
                 <Row className='justify-content-center'>
                     <Col md={6}>
-                        <Button className='float-start mb-3' href="/">Back</Button>
+                        <Row className='mb-3'>
+                            <Col>
+                                <Button className='float-start' href="/">Back</Button>
+                            </Col>
+                        </Row>
                         <Figure>
                             <Figure.Image
                                 width={171}

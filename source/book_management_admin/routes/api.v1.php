@@ -21,6 +21,7 @@ Route::post('/refresh-token', [AuthController::class, 'refreshToken']);
 Route::group(['prefix' => 'book'], function () {
     Route::get('/list', [BookManagementController::class, 'getListBooks']);
     Route::get('/detail/{bookId}', [BookManagementController::class, 'getBookDetail']);
+    Route::post('/views/{bookId}', [BookManagementController::class, 'updateViewsBook']);
 });
 
 // private routes
