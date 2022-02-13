@@ -30,6 +30,21 @@ class BookManagementController extends BaseController
     }
 
     /**
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function getListBooksByAdmin()
+    {
+        $result = $this->bookManagementService->getListBooks(true);
+
+        return $this->apiResponse(
+            $result['response'],
+            $result['message'],
+            $result['code'],
+            $result['status'],
+        );
+    }
+
+    /**
      * @param string $bookId
      * 
      * @return \Illuminate\Support\Facades\Response

@@ -50,7 +50,7 @@ export function MyPagination(props) {
       }
     }
     setPageArray(pageArr);
-  }, []);
+  }, [props.totPages]);
 
   return (
     <Fragment>

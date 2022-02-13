@@ -6,11 +6,13 @@ use App\Models\Books;
 class BookManagementRepository
 {
     /**
+     * @param boolean $isTrash
+     *
      * @return Books
      */
-    public function getListBooks()
+    public function getListBooks($isTrash = false)
     {
-        return Books::select([
+        $listBooks = Books::select([
             'id',
             'name',
             'price',
@@ -18,9 +20,17 @@ class BookManagementRepository
             'image',
             'content',
             'views',
-            'created_at'
-        ])->orderBy('created_at', 'desc')
-        ->paginate(config('common.pagination_get_limit'));
+            'created_at',
+            'deleted_at',
+            'deleted_by'
+        ]);
+        if($isTrash) {
+            $listBooks = $listBooks->withTrashed();
+        }
+        $listBooks = $listBooks->orderBy('created_at', 'desc')
+                        ->paginate(config('common.pagination_get_limit'));
+
+        return $listBooks;
     }
 
     /**

@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getAPICall, postAPICall } from '../../Support/axiosMethodCalls';
-import { AlertCommon } from '../../Support/AlertCommon';
+import showToast from '../../Support/showToast';
 import { getBookDetail, updateBook, deleteBook } from '../../Configuration/config_url';
 
 import {
@@ -11,7 +11,6 @@ import {
 
 function BookUpdate () {
     const [dataUpdate, setDataUpdate] = useState({name: '', price: 0, description: '', content: ''})
-    const [alertInfo, setAlertInfo] = useState({is_show: false, alert_type: 'success', message: ''})
     const param = useParams()
 
     useEffect(() => {
@@ -29,11 +28,11 @@ function BookUpdate () {
     function submitUpdate() {
         postAPICall(updateBook.replace('__bookId', param.bookId), dataUpdate).then(result => {
             let dataResponse = result.data
-            setAlertInfo({is_show: true, alert_type: 'success', message: dataResponse.message})
+            showToast('success', dataResponse.message)
         }).catch(error => {
             let resultError = error.response
+            showToast('error', resultError.data.message)
             console.log(resultError)
-            setAlertInfo({is_show: true, alert_type: 'danger', message: resultError.data.message})
         })
     }
 
@@ -52,11 +51,6 @@ function BookUpdate () {
                             <Card.Header as="h5" className='text-start'>Update Form</Card.Header>
                             <Card.Body className='text-start'>
                                 <Form>
-                                    <AlertCommon
-                                        isShow={alertInfo.is_show}
-                                        alertType={alertInfo.alert_type}
-                                        message={alertInfo.message}>
-                                    </AlertCommon>
                                     <Form.Group className="mb-2" controlId="formBasicName">
                                         <Form.Label className='mb-1'>Name</Form.Label>
                                         <Form.Control type="text" placeholder="Enter name"

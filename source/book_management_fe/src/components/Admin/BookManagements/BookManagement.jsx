@@ -1,8 +1,9 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAPICall } from '../../Support/axiosMethodCalls';
+import { getAPICall, postAPICall } from '../../Support/axiosMethodCalls';
+import showToast from '../../Support/showToast';
 import { MyPagination } from "../../Support/MyPagination";
-import { getListBooks } from '../../Configuration/config_url';
+import { getListBooksByAdmin, deleteBook, restoreBook } from '../../Configuration/config_url';
 
 import {
     Container, Row, Col,
@@ -20,7 +21,7 @@ function BookManagement () {
 
     function afterPageClicked(page_number) {
         setListBooks({...listBooks, current_page: page_number})
-        getAPICall(`${getListBooks}?page=${page_number}`).then(result => {
+        getAPICall(`${getListBooksByAdmin}?page=${page_number}`).then(result => {
             let dataResponse = result.data.response.list_books
             setListBooks({
                 ...listBooks,
@@ -30,11 +31,59 @@ function BookManagement () {
                 per_page: dataResponse.per_page,
                 total: dataResponse.total
             })
+            console.log(dataResponse)
         })
     }
 
     function redirectToDetail(bookId) {
         navigate(`update/${bookId}`)
+    }
+
+    function submitDeleteBook(bookId) {
+        postAPICall(deleteBook.replace('__bookId', bookId)).then(result => {
+            let dataResponse = result.data
+            setAction(bookId, true)
+            showToast('success', dataResponse.message)
+        }).catch(error => {
+            let resultError = error.response
+            showToast('error', resultError.data.message)
+            console.log(resultError)
+        })
+    }
+
+    function submitRestoreBook(bookId) {
+        postAPICall(restoreBook.replace('__bookId', bookId)).then(result => {
+            let dataResponse = result.data
+            setAction(bookId, false)
+            showToast('success', dataResponse.message)
+        }).catch(error => {
+            let resultError = error.response
+            showToast('error', resultError.data.message)
+            console.log(resultError)
+        })
+    }
+
+    function setAction(bookId, isDel) {
+        let result = findBookId(bookId)
+        let dataClone = listBooks.data;
+
+        dataClone[result.index]['deleted_by'] = null
+        setListBooks(
+            {...listBooks, data: dataClone}
+        )
+        if(isDel) {
+            dataClone[result.index]['deleted_by'] = 'deleted'
+            setListBooks(
+                {...listBooks, data: dataClone}
+            )
+        }
+    }
+
+    function findBookId(bookId) {
+        return {
+            index: listBooks.data.findIndex(({id}) => id === bookId),
+            data: listBooks.data.find(({id}) => id === bookId)
+        }
     }
 
     return (
@@ -81,12 +130,24 @@ function BookManagement () {
                                                                 </Button>
                                                             </Col>
                                                             <Col lg={6}>
-                                                                <Button variant="danger"
-                                                                className='w-100'
-                                                                size='sm'
-                                                                onClick={() => redirectToDetail(book.id)}>
-                                                                    Delete
-                                                                </Button>
+                                                                {
+                                                                    (book.deleted_by == null) ?
+                                                                    (
+                                                                        <Button variant="danger"
+                                                                        className='w-100'
+                                                                        size='sm'
+                                                                        onClick={() => submitDeleteBook(book.id)}>
+                                                                            Delete
+                                                                        </Button>
+                                                                    ) : (
+                                                                        <Button variant="success"
+                                                                        className='w-100'
+                                                                        size='sm'
+                                                                        onClick={() => submitRestoreBook(book.id)}>
+                                                                            Restore
+                                                                        </Button>
+                                                                    )
+                                                                }
                                                             </Col>
                                                         </Row>
                                                 </td>

@@ -14,11 +14,13 @@ class BookManagementService
     }
 
     /**
+     * @param boolean $isTrash
+     *
      * @return array
      */
-    public function getListBooks()
+    public function getListBooks($isTrash = false)
     {
-        $listBooks = $this->bookManagementRepository->getListBooks();
+        $listBooks = $this->bookManagementRepository->getListBooks($isTrash);
 
         return $this->handleApiResult(
             200,

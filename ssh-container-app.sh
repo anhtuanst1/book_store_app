@@ -15,8 +15,7 @@ ______      _ _   _____
 |____/____/|_| |_| /_/   \_\_|   |_|
      
 =========================================================================
-| 		Select the menu to perform the function			|
-|	1. SSH source book_management_admin				|
+|	   SSH source book_management_admin				|
 =========================================================================
 EOF
 echo "${reset}"
@@ -25,17 +24,6 @@ print_end_application () {
 	echo -n "${green}Press Any Key To Exit...${reset}"
 	read VAR
 	exit
-}
-print_menu () {
-	printf "${green}Please select menu : [1]\n${reset}"
-	read ask
-	
-	case "$ask" in
-        1)
-            main_script "book_management_admin" ;;
-        *)
-            print_menu
-	esac
 }
 
 main_script(){
@@ -51,4 +39,4 @@ main_script(){
 	echo "${green}End ssh with source${cyan} $environment ${reset}"
 }
 
-print_menu 
+main_script "book_management_admin"

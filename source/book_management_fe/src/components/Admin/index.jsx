@@ -1,9 +1,11 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { postAPICall } from '../Support/axiosMethodCalls';
 import { getLogoHeaderUrl } from '../Support/getImageUrl';
 import { getUserInfo, logout } from '../Configuration/config_url';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../../App.css';
 
 import {
@@ -14,6 +16,7 @@ import {
 function Admin () {
     const [userLogin, setUserLogin] = useState({name: '', email: ''})
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         postAPICall(getUserInfo).then(result => {
@@ -55,8 +58,8 @@ function Admin () {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="/admin/dashboard">Dashboard</Nav.Link>
-                            <Nav.Link href="/admin/book-management">Book Management</Nav.Link>
+                            <Nav.Link href="/admin/dashboard" className={location.pathname.indexOf('dashboard') != -1 ? 'active' : ''}>Dashboard</Nav.Link>
+                            <Nav.Link href="/admin/book-management" className={location.pathname.indexOf('book-management') != -1 ? 'active' : ''}>Book Management</Nav.Link>
                         </Nav>
                         <Nav>
                             <Nav.Link>{userLogin.name.charAt(0).toUpperCase() + userLogin.name.slice(1).toLowerCase()}</Nav.Link>
@@ -71,6 +74,7 @@ function Admin () {
                 <h3 className='show-check-layout'>Admin</h3>
                 <Outlet />
             </div>
+            <ToastContainer />
         </Fragment>
     )
 }

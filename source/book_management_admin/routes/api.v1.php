@@ -31,6 +31,7 @@ Route::middleware('auth.jwt')->group(function () {
     Route::post('/dashboard', [DashboardController::class, 'getDashboardInfo']);
 
     Route::group(['prefix' => 'book'], function () {
+        Route::get('/list-by-admin', [BookManagementController::class, 'getListBooksByAdmin']);
         Route::post('/create', [BookManagementController::class, 'createBook']);
         Route::post('/update/{bookId}', [BookManagementController::class, 'updateBook']);
         Route::post('/delete/{bookId}', [BookManagementController::class, 'deleteBook']);

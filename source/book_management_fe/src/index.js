@@ -22,6 +22,7 @@ import BookManagement from './components/Admin/BookManagements/BookManagement';
 import BookCreate from './components/Admin/BookManagements/BookCreate';
 import BookUpdate from './components/Admin/BookManagements/BookUpdate';
 import BookDetail from './components/Common/BookDetail';
+import PageNotFound from './components/Common/PageNotFound';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
@@ -44,6 +45,7 @@ ReactDOM.render(
               <Route path="update/:bookId" element={<BookUpdate />} />
             </Route>
           </Route>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </Provider>

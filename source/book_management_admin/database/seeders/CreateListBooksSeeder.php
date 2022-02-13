@@ -39,6 +39,8 @@ class CreateListBooksSeeder extends Seeder
             $m['price'] = rand(200, 1500);
             $m['description'] = $this->faker->realText(rand(20, 80));
             $m['content'] = $this->faker->realText(rand(600, 1500));
+            $m['views'] = rand(0, 15);
+            $m['created_at'] = $this->faker->dateTimeThisYear();
 
             $bookCreates[] = $m;
         }

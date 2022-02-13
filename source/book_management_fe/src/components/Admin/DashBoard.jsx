@@ -30,29 +30,33 @@ function DashBoard () {
         <Fragment>
             <h3 className='mb-4'>Dashboard</h3>
             <Container>
-                <Row>
-                    {
-                        (listBooks.data.length != 0) ?
-                        listBooks.data.map(book => {
-                            return (book.views > 0) ? (
-                                <Col key={book.id} sm={6} md={4} xl={3} className='py-2'>
-                                    <Card className='w-100'>
-                                        <Card.Img variant="top" src="/images/book_default.png" />
-                                        <Card.Body className='text-start'>
-                                            <Card.Title>{book.name}</Card.Title>
-                                            <Card.Text className='w-100 three-dot-1'>
-                                                {book.description}
-                                            </Card.Text>
-                                            <Card.Text className='w-100 text-end'>
-                                                {`${book.views} views`}
-                                            </Card.Text>
-                                            {/* <Button variant="primary" onClick={() => redirectToDetail(book.id)}>Read</Button> */}
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            ) : ''
-                        }) : ''
-                    }
+                <Row className='justify-content-center'>
+                    <Col md={10} xl={8}>
+                        <Row>
+                            {
+                                (listBooks.data.length != 0) ?
+                                listBooks.data.map(book => {
+                                    return (book.views > 0) ? (
+                                        <Col key={book.id} sm={6} md={3} className='py-2'>
+                                            <Card className='w-100'>
+                                                <Card.Img variant="top" src="/images/book_default.png" />
+                                                <Card.Body className='text-start'>
+                                                    <Card.Title className='w-100 three-dot-1'>{book.name}</Card.Title>
+                                                    <Card.Text className='w-100 three-dot-1'>
+                                                        {book.description}
+                                                    </Card.Text>
+                                                    <Card.Text className='w-100 text-end'>
+                                                        {`${book.views} views`}
+                                                    </Card.Text>
+                                                    {/* <Button variant="primary" onClick={() => redirectToDetail(book.id)}>Read</Button> */}
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    ) : ''
+                                }) : ''
+                            }
+                        </Row>
+                    </Col>
                 </Row>
             </Container>
         </Fragment>
