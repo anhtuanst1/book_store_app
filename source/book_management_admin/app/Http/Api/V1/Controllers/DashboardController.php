@@ -16,6 +16,7 @@ class DashboardController extends BaseController
      */
     public function getDashboardInfo()
     {
+        // dump('getDashboardInfo');
         $result = $this->dashboardService->getListBooksByView();
 
         return $this->apiResponse(

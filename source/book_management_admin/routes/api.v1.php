@@ -25,7 +25,7 @@ Route::group(['prefix' => 'book'], function () {
 });
 
 // private routes
-Route::middleware('auth.jwt')->group(function () {
+Route::middleware(['auth.jwt', 'after.jwt'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/get-user', [AuthController::class, 'getUserInfo']);
     Route::post('/dashboard', [DashboardController::class, 'getDashboardInfo']);
