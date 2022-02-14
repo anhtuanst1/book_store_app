@@ -16,6 +16,9 @@
 	    => Open setting Docker and make sure option "Use the WSL 2 based engine" disabled.
 	- Use file sh with git-scm
 	    => Download and install git-scm : https://git-scm.com/
+	- Use generate Swagger API document
+		=> Run command
+		``` php artisan l5-swagger:generate ```
 
 ## Shell Function:
 
