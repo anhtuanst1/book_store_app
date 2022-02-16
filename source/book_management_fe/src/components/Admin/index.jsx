@@ -49,7 +49,7 @@ function Admin () {
         <Fragment>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="mb-4">
                 <Container>
-                    <Navbar.Brand href="/">
+                    <Navbar.Brand href="/admin">
                         <img
                         alt=""
                         src={getLogoHeaderUrl()}
