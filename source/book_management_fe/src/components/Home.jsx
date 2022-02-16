@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAPICall, postAPICall } from './Support/axiosMethodCalls';
+import { callAPI } from './Support/axiosMethodCalls';
 import { MyPagination } from "./Support/MyPagination";
-import { getListBooks, updateViewsBook } from './Configuration/config_url';
+import { endPoints } from './Configuration/config_url';
 
 import {
     Container, Row, Col,
@@ -20,7 +20,10 @@ function Home () {
 
     function afterPageClicked(page_number) {
         setListBooks({...listBooks, current_page: page_number})
-        getAPICall(`${getListBooks}?page=${page_number}`).then(result => {
+        let apiInfo = endPoints.get_list_books
+        apiInfo.path = `${apiInfo.path}?page=${page_number}`
+
+        callAPI(apiInfo).then(result => {
             let dataResponse = result.data.response.list_books
             setListBooks({
                 ...listBooks,
@@ -35,7 +38,10 @@ function Home () {
     }
 
     function redirectToDetail(bookId) {
-        postAPICall(updateViewsBook.replace('__bookId', bookId)).then(result => {
+        let apiInfo = endPoints.book_views
+        apiInfo.path = apiInfo.path.replace('__bookId', bookId)
+
+        callAPI(apiInfo).then(result => {
             let dataResponse = result.data.response
             console.log(dataResponse)
         })

@@ -45,7 +45,8 @@ ReactDOM.render(
               <Route path="update/:bookId" element={<BookUpdate />} />
             </Route>
           </Route>
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="page-not-found" element={<PageNotFound />} />
+          <Route path="*" element={<Navigate to="/page-not-found" />} />
         </Routes>
       </BrowserRouter>
     </Provider>

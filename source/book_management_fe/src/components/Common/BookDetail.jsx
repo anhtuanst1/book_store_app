@@ -1,7 +1,8 @@
 import { Fragment, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getAPICall } from '../Support/axiosMethodCalls';
-import { getBookDetail } from '../Configuration/config_url';
+import { useParams, useNavigate } from 'react-router-dom';
+import { callAPI } from '../Support/axiosMethodCalls';
+import showToast from '../Support/showToast';
+import { endPoints } from '../Configuration/config_url';
 
 import {
     Container, Row, Col,
@@ -12,14 +13,22 @@ import {
 function BookDetail () {
     const [bookInfo, setBookInfo] = useState({data: []})
     const param = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
-        getAPICall(getBookDetail.replace('__bookId', param.bookId)).then(result => {
+        let apiInfo = endPoints.get_book_detail
+        apiInfo.path = apiInfo.path.replace('__bookId', param.bookId)
+
+        callAPI(apiInfo).then(result => {
             let dataResponse = result.data.response
             setBookInfo({
                 ...bookInfo,
                 data: dataResponse.book_info
             })
+        }).catch(error => {
+            let resultError = error.response
+            showToast('error', resultError.data.message)
+            navigate('/page-not-found')
         })
     }, [])
 

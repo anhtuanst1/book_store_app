@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { postAPICall } from '../Support/axiosMethodCalls';
+import { callAPI } from '../Support/axiosMethodCalls';
 import { getLogoHeaderUrl } from '../Support/getImageUrl';
 import { MyLoader } from '../Support/MyLoader';
-import { getUserInfo, logout } from '../Configuration/config_url';
+import { endPoints } from '../Configuration/config_url';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../App.css';
@@ -19,9 +19,10 @@ function Admin () {
     const [isLoading, setIsLoading] = useState(true)
     const navigate = useNavigate()
     const location = useLocation()
+    localStorage.setItem("is_admin", JSON.stringify(true))
 
     useEffect(() => {
-        postAPICall(getUserInfo).then(result => {
+        callAPI(endPoints.get_user_login).then(result => {
             let dataResponse = result.data.response
             setUserLogin({name: dataResponse.name, email: dataResponse.email})
             setIsLoading(false)
@@ -32,7 +33,7 @@ function Admin () {
     }, [])
 
     function doLogout() {
-        postAPICall(logout).then(result => {
+        callAPI(endPoints.logout).then(result => {
             clearAuth()
         }).catch(error => {
             let resultError = error.response

@@ -1,14 +1,53 @@
 // All Endpoints.
-export const getListBooks = `http://bookmanagement-admin-dev.com/api/v1/book/list`;
-export const getBookDetail = `http://bookmanagement-admin-dev.com/api/v1/book/detail/__bookId`;
-export const doLogin = `http://bookmanagement-admin-dev.com/api/v1/login`;
-export const getUserInfo = `http://bookmanagement-admin-dev.com/api/v1/get-user`;
-export const refreshToken = `http://demo0725191.mockable.io/delete_data`;
-export const logout = `http://bookmanagement-admin-dev.com/api/v1/logout`;
-export const getListBooksByView = `http://bookmanagement-admin-dev.com/api/v1/dashboard`;
-export const getListBooksByAdmin = `http://bookmanagement-admin-dev.com/api/v1/book/list-by-admin`;
-export const createBook = `http://bookmanagement-admin-dev.com/api/v1/book/create`;
-export const updateBook = `http://bookmanagement-admin-dev.com/api/v1/book/update/__bookId`;
-export const updateViewsBook = `http://bookmanagement-admin-dev.com/api/v1/book/views/__bookId`;
-export const deleteBook = `http://bookmanagement-admin-dev.com/api/v1/book/delete/__bookId`;
-export const restoreBook = `http://bookmanagement-admin-dev.com/api/v1/book/restore/__bookId`;
+export const domainEndPoint = `http://bookmanagement-admin-dev.com/api/v1/`;
+
+export const endPoints = {
+    get_list_books: {
+        method: 'get',
+        path: 'books',
+    },
+    get_book_detail: {
+        method: 'get',
+        path: 'books/__bookId',
+    },
+    dashboard: {
+        method: 'get',
+        path: 'dashboard',
+    },
+    get_user_login: {
+        method: 'get',
+        path: 'get-user-login',
+    },
+    login: {
+        method: 'post',
+        path: 'login',
+    },
+    refresh_token: {
+        method: 'post',
+        path: 'refresh-token',
+    },
+    logout: {
+        method: 'post',
+        path: 'logout',
+    },
+    book_create: {
+        method: 'post',
+        path: 'books',
+    },
+    book_update: {
+        method: 'put',
+        path: 'books/__bookId',
+    },
+    book_delete: {
+        method: 'delete',
+        path: 'books/__bookId',
+    },
+    book_restore: {
+        method: 'put',
+        path: 'books/__bookId/restore',
+    },
+    book_views: {
+        method: 'put',
+        path: 'books/__bookId/views',
+    },
+}

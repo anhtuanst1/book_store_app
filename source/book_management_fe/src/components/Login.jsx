@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postAPICall } from './Support/axiosMethodCalls';
-import { doLogin } from './Configuration/config_url';
+import { callAPI } from './Support/axiosMethodCalls';
+import { endPoints } from './Configuration/config_url';
 
 import {
     Container, Row, Col,
@@ -20,7 +20,7 @@ function Login () {
     }, [])
 
     function submitLogin() {
-        postAPICall(doLogin, loginInfo).then(result => {
+        callAPI(endPoints.login, loginInfo).then(result => {
             clearError()
             let dataResponse = result.data.response
             localStorage.setItem("data_login", JSON.stringify(dataResponse))

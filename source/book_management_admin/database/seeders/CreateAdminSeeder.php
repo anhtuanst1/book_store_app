@@ -21,12 +21,14 @@ class CreateAdminSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('admin'),
+                'is_admin' => true,
                 'created_at' => now()
             ],
             [
                 'name' => 'staff',
                 'email' => 'staff@gmail.com',
                 'password' => bcrypt('staff'),
+                'is_admin' => false,
                 'created_at' => now()
             ]
         ];

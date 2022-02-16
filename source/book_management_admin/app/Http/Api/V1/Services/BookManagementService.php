@@ -14,13 +14,11 @@ class BookManagementService
     }
 
     /**
-     * @param boolean $isTrash
-     *
      * @return array
      */
-    public function getListBooks($isTrash = false)
+    public function getListBooks()
     {
-        $listBooks = $this->bookManagementRepository->getListBooks($isTrash);
+        $listBooks = $this->bookManagementRepository->getListBooks($this->checkUserLogin());
 
         return $this->handleApiResult(
             200,
@@ -39,7 +37,7 @@ class BookManagementService
      */
     public function getBookDetail($bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId);
+        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         if(empty($bookInfo)) {
             return $this->handleApiResult(
@@ -98,7 +96,7 @@ class BookManagementService
      */
     public function updateBook(array $dataUpdate, $bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, true);
+        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         try {
             if(empty($bookInfo)) {
@@ -134,7 +132,7 @@ class BookManagementService
      */
     public function updateViewsBook($bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, true);
+        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         try {
             if(empty($bookInfo)) {
@@ -170,7 +168,7 @@ class BookManagementService
      */
     public function deleteBook($bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, true);
+        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         try {
             if(empty($bookInfo)) {
@@ -202,7 +200,7 @@ class BookManagementService
      */
     public function restoreBook($bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, true);
+        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         try {
             if(empty($bookInfo)) {
@@ -225,5 +223,12 @@ class BookManagementService
                 __('message_error.book.ERROR_00005')
             );
         }
+    }
+
+    private function checkUserLogin()
+    {
+        $userLoginInfo = auth()->user();
+
+        return (!empty($userLoginInfo) && $userLoginInfo->is_admin)  ? true : false;
     }
 }

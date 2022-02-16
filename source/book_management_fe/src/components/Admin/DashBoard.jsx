@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postAPICall } from '../Support/axiosMethodCalls';
-import { getListBooksByView } from '../Configuration/config_url';
+import { callAPI } from '../Support/axiosMethodCalls';
+import { endPoints } from '../Configuration/config_url';
 
 import {
     Container, Row, Col,
@@ -14,7 +14,7 @@ function DashBoard () {
     const navigate = useNavigate()
 
     useEffect(() => {
-        postAPICall(getListBooksByView).then(result => {
+        callAPI(endPoints.dashboard).then(result => {
             let dataResponse = result.data.response.list_books_by_view
             setListBooks({
                 data: dataResponse
@@ -22,9 +22,9 @@ function DashBoard () {
         })
     }, [])
 
-    function redirectToDetail(bookId) {
-        navigate(`book/${bookId}`)
-    }
+    // function redirectToDetail(bookId) {
+    //     navigate(`book/${bookId}`)
+    // }
 
     return (
         <Fragment>

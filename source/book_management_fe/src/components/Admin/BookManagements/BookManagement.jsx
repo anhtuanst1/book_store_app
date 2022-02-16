@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAPICall, postAPICall } from '../../Support/axiosMethodCalls';
+import { callAPI } from '../../Support/axiosMethodCalls';
 import showToast from '../../Support/showToast';
 import { MyPagination } from "../../Support/MyPagination";
-import { getListBooksByAdmin, deleteBook, restoreBook } from '../../Configuration/config_url';
+import { endPoints } from '../../Configuration/config_url';
 
 import {
     Container, Row, Col,
@@ -21,7 +21,10 @@ function BookManagement () {
 
     function afterPageClicked(page_number) {
         setListBooks({...listBooks, current_page: page_number})
-        getAPICall(`${getListBooksByAdmin}?page=${page_number}`).then(result => {
+        let apiInfo = endPoints.get_list_books
+        apiInfo.path = `${apiInfo.path}?page=${page_number}`
+
+        callAPI(apiInfo).then(result => {
             let dataResponse = result.data.response.list_books
             setListBooks({
                 ...listBooks,
@@ -40,7 +43,10 @@ function BookManagement () {
     }
 
     function submitDeleteBook(bookId) {
-        postAPICall(deleteBook.replace('__bookId', bookId)).then(result => {
+        let apiInfo = endPoints.book_delete
+        apiInfo.path = apiInfo.path.replace('__bookId', bookId)
+
+        callAPI(apiInfo).then(result => {
             let dataResponse = result.data
             setAction(bookId, true)
             showToast('success', dataResponse.message)
@@ -52,7 +58,10 @@ function BookManagement () {
     }
 
     function submitRestoreBook(bookId) {
-        postAPICall(restoreBook.replace('__bookId', bookId)).then(result => {
+        let apiInfo = endPoints.book_restore
+        apiInfo.path = apiInfo.path.replace('__bookId', bookId)
+
+        callAPI(apiInfo).then(result => {
             let dataResponse = result.data
             setAction(bookId, false)
             showToast('success', dataResponse.message)

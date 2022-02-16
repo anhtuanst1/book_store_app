@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { postAPICall } from '../../Support/axiosMethodCalls';
+import { callAPI } from '../../Support/axiosMethodCalls';
 import showToast from '../../Support/showToast';
-import { createBook } from '../../Configuration/config_url';
+import { endPoints } from '../../Configuration/config_url';
 
 import {
     Container, Row, Col,
@@ -19,7 +19,7 @@ function BookCreate () {
     }, [])
 
     function submitCreate() {
-        postAPICall(createBook, dataCreate).then(result => {
+        callAPI(endPoints.book_create, dataCreate).then(result => {
             let dataResponse = result.data
             showToast('success', dataResponse.message)
             navigate('/admin/book-management')

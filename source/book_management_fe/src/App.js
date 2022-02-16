@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Outlet } from 'react-router-dom';
 import { getLogoHeaderUrl } from './components/Support/getImageUrl';
+import { ToastContainer, toast } from 'react-toastify';
 import './App.css';
 
 import {
@@ -9,6 +10,8 @@ import {
 } from 'react-bootstrap';
 
 function App() {
+  localStorage.setItem("is_admin", JSON.stringify(false))
+
   return (
     <Fragment>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="mb-4">
@@ -41,6 +44,7 @@ function App() {
         <h3 className='show-check-layout'>App layout</h3>
         <Outlet />
       </div>
+      <ToastContainer />
     </Fragment>
   )
 }

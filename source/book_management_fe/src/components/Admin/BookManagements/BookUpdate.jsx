@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAPICall, postAPICall } from '../../Support/axiosMethodCalls';
+import { callAPI } from '../../Support/axiosMethodCalls';
 import showToast from '../../Support/showToast';
-import { getBookDetail, updateBook, deleteBook } from '../../Configuration/config_url';
+import { endPoints } from '../../Configuration/config_url';
 
 import {
     Container, Row, Col,
@@ -14,7 +14,10 @@ function BookUpdate () {
     const param = useParams()
 
     useEffect(() => {
-        getAPICall(getBookDetail.replace('__bookId', param.bookId)).then(result => {
+        let apiInfo = endPoints.get_book_detail
+        apiInfo.path = apiInfo.path.replace('__bookId', param.bookId)
+
+        callAPI(apiInfo).then(result => {
             let dataResponse = result.data.response
             setDataUpdate({
                 name: dataResponse.book_info.name,
@@ -26,7 +29,10 @@ function BookUpdate () {
     }, [])
 
     function submitUpdate() {
-        postAPICall(updateBook.replace('__bookId', param.bookId), dataUpdate).then(result => {
+        let apiInfo = endPoints.book_update
+        apiInfo.path = apiInfo.path.replace('__bookId', param.bookId)
+
+        callAPI(apiInfo, dataUpdate).then(result => {
             let dataResponse = result.data
             showToast('success', dataResponse.message)
         }).catch(error => {
