@@ -2,15 +2,15 @@
 namespace App\Http\Api\V1\Controllers;
 
 use App\AppBase\BaseController;
-use App\Http\Api\V1\Services\BookManagementService;
+use App\Http\Api\V1\Services\BookService;
 use App\Http\Api\V1\Requests\CreateBookRequest;
 use App\Http\Api\V1\Requests\UpdateBookRequest;
 
-class BookManagementController extends BaseController
+class BookController extends BaseController
 {
-    public function __construct(BookManagementService $bookManagementService)
+    public function __construct(BookService $bookService)
     {
-        $this->bookManagementService = $bookManagementService;
+        $this->bookService = $bookService;
     }
 
     
@@ -19,7 +19,7 @@ class BookManagementController extends BaseController
      */
     public function getListBooks()
     {
-        $result = $this->bookManagementService->getListBooks();
+        $result = $this->bookService->getListBooks();
 
         return $this->apiResponse(
             $result['response'],
@@ -36,7 +36,7 @@ class BookManagementController extends BaseController
      */
     public function getBookDetail($bookId)
     {
-        $result = $this->bookManagementService->getBookDetail($bookId);
+        $result = $this->bookService->getBookDetail($bookId);
 
         return $this->apiResponse(
             $result['response'],
@@ -54,7 +54,7 @@ class BookManagementController extends BaseController
     public function createBook(CreateBookRequest $request)
     {
         $dataInput = $request->only(config("common.book.create_fields"));
-        $result = $this->bookManagementService->createBook($dataInput);
+        $result = $this->bookService->createBook($dataInput);
 
         if (isset($result['response'])) {
             return $this->apiResponse(
@@ -82,7 +82,7 @@ class BookManagementController extends BaseController
     public function updateBook(UpdateBookRequest $request, $bookId)
     {
         $dataUpdate = $request->only(config("common.book.update_fields"));
-        $result = $this->bookManagementService->updateBook($dataUpdate, $bookId);
+        $result = $this->bookService->updateBook($dataUpdate, $bookId);
 
         if (isset($result['response'])) {
             return $this->apiResponse(
@@ -108,7 +108,7 @@ class BookManagementController extends BaseController
      */
     public function updateViewsBook($bookId)
     {
-        $result = $this->bookManagementService->updateViewsBook($bookId);
+        $result = $this->bookService->updateViewsBook($bookId);
 
         if (isset($result['response'])) {
             return $this->apiResponse(
@@ -134,7 +134,7 @@ class BookManagementController extends BaseController
      */
     public function deleteBook($bookId)
     {
-        $result = $this->bookManagementService->deleteBook($bookId);
+        $result = $this->bookService->deleteBook($bookId);
 
         return $this->apiResponse(
             null,
@@ -151,7 +151,7 @@ class BookManagementController extends BaseController
      */
     public function restoreBook($bookId)
     {
-        $result = $this->bookManagementService->restoreBook($bookId);
+        $result = $this->bookService->restoreBook($bookId);
 
         return $this->apiResponse(
             null,

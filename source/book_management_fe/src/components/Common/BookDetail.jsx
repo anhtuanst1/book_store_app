@@ -16,8 +16,8 @@ function BookDetail () {
     const navigate = useNavigate()
 
     useEffect(() => {
-        let apiInfo = endPoints.get_book_detail
-        apiInfo.path = apiInfo.path.replace('__bookId', param.bookId)
+        let dataConfig = endPoints.get_book_detail
+        let apiInfo = {...dataConfig, path: dataConfig.path.replace('__bookId', param.bookId)}
 
         callAPI(apiInfo).then(result => {
             let dataResponse = result.data.response

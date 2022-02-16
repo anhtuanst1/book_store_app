@@ -14,8 +14,8 @@ function BookUpdate () {
     const param = useParams()
 
     useEffect(() => {
-        let apiInfo = endPoints.get_book_detail
-        apiInfo.path = apiInfo.path.replace('__bookId', param.bookId)
+        let dataConfig = endPoints.get_book_detail
+        let apiInfo = {...dataConfig, path: dataConfig.path.replace('__bookId', param.bookId)}
 
         callAPI(apiInfo).then(result => {
             let dataResponse = result.data.response
@@ -29,8 +29,8 @@ function BookUpdate () {
     }, [])
 
     function submitUpdate() {
-        let apiInfo = endPoints.book_update
-        apiInfo.path = apiInfo.path.replace('__bookId', param.bookId)
+        let dataConfig = endPoints.book_update
+        let apiInfo = {...dataConfig, path: dataConfig.path.replace('__bookId', param.bookId)}
 
         callAPI(apiInfo, dataUpdate).then(result => {
             let dataResponse = result.data

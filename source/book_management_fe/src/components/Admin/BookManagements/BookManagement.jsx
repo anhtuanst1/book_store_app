@@ -21,8 +21,8 @@ function BookManagement () {
 
     function afterPageClicked(page_number) {
         setListBooks({...listBooks, current_page: page_number})
-        let apiInfo = endPoints.get_list_books
-        apiInfo.path = `${apiInfo.path}?page=${page_number}`
+        let dataConfig = endPoints.get_list_books
+        let apiInfo = {...dataConfig, path: `${dataConfig.path}?page=${page_number}`}
 
         callAPI(apiInfo).then(result => {
             let dataResponse = result.data.response.list_books
@@ -43,8 +43,8 @@ function BookManagement () {
     }
 
     function submitDeleteBook(bookId) {
-        let apiInfo = endPoints.book_delete
-        apiInfo.path = apiInfo.path.replace('__bookId', bookId)
+        let dataConfig = endPoints.book_delete
+        let apiInfo = {...dataConfig, path: dataConfig.path.replace('__bookId', bookId)}
 
         callAPI(apiInfo).then(result => {
             let dataResponse = result.data
@@ -58,8 +58,8 @@ function BookManagement () {
     }
 
     function submitRestoreBook(bookId) {
-        let apiInfo = endPoints.book_restore
-        apiInfo.path = apiInfo.path.replace('__bookId', bookId)
+        let dataConfig = endPoints.book_restore
+        let apiInfo = {...dataConfig, path: dataConfig.path.replace('__bookId', bookId)}
 
         callAPI(apiInfo).then(result => {
             let dataResponse = result.data

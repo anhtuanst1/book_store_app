@@ -2,7 +2,7 @@
 
 use App\Http\Api\V1\Controllers\AuthController;
 use App\Http\Api\V1\Controllers\DashboardController;
-use App\Http\Api\V1\Controllers\BookManagementController;
+use App\Http\Api\V1\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +19,9 @@ use App\Http\Api\V1\Controllers\BookManagementController;
 Route::post('/login', [AuthController::class, 'doLogin']);
 Route::post('/refresh-token', [AuthController::class, 'refreshToken']);
 Route::group(['prefix' => 'books'], function () {
-    Route::get('/', [BookManagementController::class, 'getListBooks']);
-    Route::get('/{bookId}', [BookManagementController::class, 'getBookDetail']);
-    Route::put('/{bookId}/views', [BookManagementController::class, 'updateViewsBook']);
+    Route::get('/', [BookController::class, 'getListBooks']);
+    Route::get('/{bookId}', [BookController::class, 'getBookDetail']);
+    Route::put('/{bookId}/views', [BookController::class, 'updateViewsBook']);
 });
 
 // private routes
@@ -31,9 +31,9 @@ Route::middleware(['auth.jwt', 'after.jwt'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'getDashboardInfo']);
 
     Route::group(['prefix' => 'books'], function () {
-        Route::post('/', [BookManagementController::class, 'createBook']);
-        Route::put('/{bookId}', [BookManagementController::class, 'updateBook']);
-        Route::delete('/{bookId}', [BookManagementController::class, 'deleteBook']);
-        Route::put('/{bookId}/restore', [BookManagementController::class, 'restoreBook']);
+        Route::post('/', [BookController::class, 'createBook']);
+        Route::put('/{bookId}', [BookController::class, 'updateBook']);
+        Route::delete('/{bookId}', [BookController::class, 'deleteBook']);
+        Route::put('/{bookId}/restore', [BookController::class, 'restoreBook']);
     });
 });

@@ -1,16 +1,16 @@
 <?php
 namespace App\Http\Api\V1\Services;
 
-use App\Http\Api\V1\Repositories\BookManagementRepository;
+use App\Http\Api\V1\Repositories\BookRepository;
 use App\Traits\ResponseApiTrait;
 
-class BookManagementService
+class BookService
 {
     use ResponseApiTrait;
 
-    public function __construct(BookManagementRepository $bookManagementRepository)
+    public function __construct(BookRepository $bookRepository)
     {
-        $this->bookManagementRepository = $bookManagementRepository;
+        $this->bookRepository = $bookRepository;
     }
 
     /**
@@ -18,7 +18,7 @@ class BookManagementService
      */
     public function getListBooks()
     {
-        $listBooks = $this->bookManagementRepository->getListBooks($this->checkUserLogin());
+        $listBooks = $this->bookRepository->getListBooks($this->checkUserLogin());
 
         return $this->handleApiResult(
             200,
@@ -37,7 +37,7 @@ class BookManagementService
      */
     public function getBookDetail($bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
+        $bookInfo = $this->bookRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         if(empty($bookInfo)) {
             return $this->handleApiResult(
@@ -68,7 +68,7 @@ class BookManagementService
     {
         try {
             $dataInput['updated_at'] = null;
-            $result = $this->bookManagementRepository->createBook($dataInput);
+            $result = $this->bookRepository->createBook($dataInput);
             $result = $result->toArray();
             // $result['id'] = DB::getPdo()->lastInsertId();
 
@@ -96,7 +96,7 @@ class BookManagementService
      */
     public function updateBook(array $dataUpdate, $bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
+        $bookInfo = $this->bookRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         try {
             if(empty($bookInfo)) {
@@ -132,7 +132,7 @@ class BookManagementService
      */
     public function updateViewsBook($bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
+        $bookInfo = $this->bookRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         try {
             if(empty($bookInfo)) {
@@ -168,7 +168,7 @@ class BookManagementService
      */
     public function deleteBook($bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
+        $bookInfo = $this->bookRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         try {
             if(empty($bookInfo)) {
@@ -177,7 +177,7 @@ class BookManagementService
                     __('message_error.book.ERROR_00001')
                 );
             }
-            $this->bookManagementRepository->deleteBook($bookId);
+            $this->bookRepository->deleteBook($bookId);
 
             return $this->handleApiResult(
                 200,
@@ -200,7 +200,7 @@ class BookManagementService
      */
     public function restoreBook($bookId)
     {
-        $bookInfo = $this->bookManagementRepository->getBookDetail($bookId, $this->checkUserLogin());
+        $bookInfo = $this->bookRepository->getBookDetail($bookId, $this->checkUserLogin());
 
         try {
             if(empty($bookInfo)) {
@@ -209,7 +209,7 @@ class BookManagementService
                     __('message_error.book.ERROR_00001')
                 );
             }
-            $this->bookManagementRepository->restoreBook($bookId);
+            $this->bookRepository->restoreBook($bookId);
 
             return $this->handleApiResult(
                 200,
