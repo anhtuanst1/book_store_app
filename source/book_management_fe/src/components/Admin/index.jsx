@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { postAPICall } from '../Support/axiosMethodCalls';
 import { getLogoHeaderUrl } from '../Support/getImageUrl';
+import { MyLoader } from '../Support/MyLoader';
 import { getUserInfo, logout } from '../Configuration/config_url';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,6 +16,7 @@ import {
 
 function Admin () {
     const [userLogin, setUserLogin] = useState({name: '', email: ''})
+    const [isLoading, setIsLoading] = useState(true)
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -22,8 +24,10 @@ function Admin () {
         postAPICall(getUserInfo).then(result => {
             let dataResponse = result.data.response
             setUserLogin({name: dataResponse.name, email: dataResponse.email})
+            setIsLoading(false)
         }).catch(error => {
             clearAuth()
+            setIsLoading(false)
         })
     }, [])
 
@@ -75,6 +79,7 @@ function Admin () {
                 <Outlet />
             </div>
             <ToastContainer />
+            {/* <MyLoader isLoading={isLoading}/> */}
         </Fragment>
     )
 }
