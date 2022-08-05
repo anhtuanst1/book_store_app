@@ -15,8 +15,8 @@ services:
       - app-network
     depends_on:
       - database
-      - mailhog
-      - redis
+      # - mailhog
+      # - redis
   #database service
   database:
     image: mysql:8.0
