@@ -16,7 +16,6 @@ services:
     depends_on:
       - database
       # - mailhog
-      # - redis
   #database service
   database:
     image: mysql:8.0
@@ -34,7 +33,7 @@ services:
       - app-network
   # nginx service
   nginx:
-    image: nginx:alpine
+    image: nginx:1.22.0
     restart: unless-stopped
     working_dir: /var/www/html
     volumes:
@@ -55,15 +54,6 @@ services:
   #   ports: 
   #     - 1025:1025 # smtp server
   #     - 8025:8025 # web ui
-  #   networks:
-  #     - app-network
-  # redis:
-  #   image: redis:6.2.6-alpine
-  #   restart: unless-stopped
-  #   volumes:
-  #   - redisapp:/data
-  #   ports:
-  #     - "6379:6379"
   #   networks:
   #     - app-network
   swagger-editor:
