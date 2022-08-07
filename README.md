@@ -25,10 +25,12 @@
 	1. start-docker.sh -> init/start container docker for project
 	2. ssh-container-app.sh -> ssh to container app project
 
-# Installation (Step by step)
+# Installation Backend (Step by step)
 
 - Step 1: Init Docker `Run file start-docker.sh`
 - Step 2.1: Setup source Laravel `Run file ssh-container-app.sh => Run command : composer install`
 - Step 2.2:`Keep the ssh-container-app.sh window => Run command : cp .env.example .env`
-- Step 2.3: Run migration `Keep the ssh-container-app.sh window => Run command : php artisan migrate`
-- Step 2.4: Create dummy data `Keep the ssh-container-app.sh window => Run command : php artisan db:seed`
+- Step 2.3: Generate app key `Keep the ssh-container-app.sh window => Run command : php artisan key:generate`
+- Step 2.4: Generate jwt key `Keep the ssh-container-app.sh window => Run command : php artisan jwt:generate`
+- Step 2.5: Run migration `Keep the ssh-container-app.sh window => Run command : php artisan migrate`
+- Step 2.6: Create dummy data `Keep the ssh-container-app.sh window => Run command : php artisan db:seed`
